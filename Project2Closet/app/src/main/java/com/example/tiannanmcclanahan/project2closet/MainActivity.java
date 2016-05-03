@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(MainActivity.this);
 
-        final Cursor cursor = helper.getClothingItem(1);
+        Cursor cursor = helper.getClothingItem();
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
