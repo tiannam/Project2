@@ -12,7 +12,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ClothingItems.db";
-    public static final String CLOTHING_TABLE_NAME = "Clothing_Items";
+    public static final String CLOTHING_TABLE = "Clothing_Items";
 
     public static final String COL_ID = "ID";
     public static final String COL_NAME = "Name";
@@ -23,8 +23,18 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
     public static final String COL_DESCRIPTION = "Description";
     public static final String COL_PURCHASE_DATE = "Purchase Date";
 
-    public static final String [] COLUMNS = {
+    public static final String[] COLUMNS = {
             COL_ID, COL_NAME, COL_TYPE, COL_COLOR, COL_SIZE, COL_BRAND, COL_DESCRIPTION, COL_PURCHASE_DATE };
+
+    private static final String CREATE_CLOTHING_TABLE = "CREATE TABLE " + CLOTHING_TABLE + "(" +
+        COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        COL_NAME + " TEXT, " +
+        COL_TYPE + " TEXT, " +
+        COL_COLOR + "TEXT, " +
+        COL_SIZE + "TEXT, " +
+        COL_BRAND + "TEXT, " +
+        COL_DESCRIPTION + "TEXT, " +
+        COL_PURCHASE_DATE + "TEXT)";
 
     private static ClothingSQLiteHelper instance;
 
@@ -37,19 +47,24 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
     public ClothingSQLiteHelper (Context context){
         super (context, DATABASE_NAME, null, DATABASE_VERSION);
-//        this.myContext = context;
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        //CREATE TABLE sql statement
+        db.execSQL(CREATE_CLOTHING_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TABLE);
+        onCreate(db);
 
     }
-    public Cursor getClothing (int id){
+
+    public Cursor getClothingItem (int id){
+
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -59,7 +74,11 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         String[] selectionArgs = new String[]{String.valueOf(id)};
         Cursor cursor = database.query("Jackets", projection, selection, selectionArgs, null, null, null, null);
 
-        return cursor;
+        cursor.moveToFirst();
+        String name = cursor.getString(cursor.getColumnIndex("Name"));
+        String type = cursor.getString(cursor.getColumnIndex("Type"));
+        return new item (id, name, type);
+
     }
 
 }

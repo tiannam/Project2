@@ -3,11 +3,14 @@ package com.example.tiannanmcclanahan.project2closet;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +19,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         handleIntent(getIntent());
+
+        ListView listView = (ListView)findViewById(R.id.category_list);
+
+        ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(MainActivity.this);
+
+        final Cursor cursor = helper.getClothingItem(1);
+
+        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
+
+        listView.setAdapter(simpleCursorAdapter);
 
     }
 
