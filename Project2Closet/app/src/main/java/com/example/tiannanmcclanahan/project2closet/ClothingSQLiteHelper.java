@@ -38,6 +38,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         COL_DESCRIPTION + " TEXT, " +
         COL_PURCHASE_DATE + " TEXT)";
 
+    //Singleton class
     private static ClothingSQLiteHelper instance;
 
     public static ClothingSQLiteHelper getInstance(Context context){
@@ -65,7 +66,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         onCreate(db);
 
     }
-
+    //Create default data for database
     public void addDefaultData(SQLiteDatabase db){
         ContentValues values = new ContentValues();
         values.put(COL_NAME, "Jacket 1");
@@ -118,8 +119,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         db.insert(CLOTHING_TABLE, null ,values);
     }
 
-    public Cursor getClothingItem (){
-
+    public Cursor getClothingItems (){
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -136,6 +136,21 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 //        String type = cursor.getString(cursor.getColumnIndex("Type"));
         return cursor;
 
+    }
+
+    public String getDetailsById(int id){
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String [] projection = new String[]{COL_NAME, COL_COLOR, COL_BRAND, COL_DESCRIPTION, COL_SIZE, COL_PURCHASE_DATE};
+
+        Cursor cursor = database.query(CLOTHING_TABLE,projection, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()){
+            return cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+        }else {
+            return null;
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -24,11 +26,21 @@ public class MainActivity extends AppCompatActivity {
 
         ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(MainActivity.this);
 
-        Cursor cursor = helper.getClothingItem();
+        final Cursor cursor = helper.getClothingItems();
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
         listView.setAdapter(simpleCursorAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent =  new Intent(MainActivity.this,DetailActivity.class);
+                cursor.moveToPosition(position);
+                intent.putExtra("id",cursor.getInt(cursor.getColumnIndex(ClothingSQLiteHelper.COL_ID)));
+                startActivity(intent);
+            }
+        });
 
     }
 
