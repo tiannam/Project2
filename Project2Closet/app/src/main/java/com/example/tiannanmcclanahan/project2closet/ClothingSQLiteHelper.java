@@ -144,12 +144,14 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
         String [] projection = new String[]{COL_NAME, COL_COLOR, COL_BRAND, COL_DESCRIPTION, COL_SIZE, COL_PURCHASE_DATE};
 
-        Cursor cursor = database.query(CLOTHING_TABLE,projection, null, null, null, null, null, null);
+        Cursor cursor = database.query(CLOTHING_TABLE,projection, COL_ID + "= ?", new String []{String.valueOf(id)}, null, null, null, null);
+
+        DatabaseUtils.dumpCursor(cursor);
 
         if (cursor.moveToFirst()){
             return cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
         }else {
-            return null;
+            return "No Description Found";
         }
     }
 
