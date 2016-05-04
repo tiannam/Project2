@@ -124,17 +124,25 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
 
         String [] projection = new String[]{COL_ID, COL_NAME, COL_TYPE};
-//        String selection = COL_ID+" = ?";
-//        String[] selectionArgs = new String[]{String.valueOf(id)};
-//        Cursor cursor = database.rawQuery("SELECT Brand, Type, Size, Color FROM " + CLOTHING_TABLE, null);
+
         Cursor cursor = database.query(CLOTHING_TABLE, projection, null, null, null, null, null, null);
 
         DatabaseUtils.dumpCursor(cursor);
 
-//        cursor.moveToFirst();
-//        String name = cursor.getString(cursor.getColumnIndex("Name"));
-//        String type = cursor.getString(cursor.getColumnIndex("Type"));
         return cursor;
+
+    }
+    public Cursor searchClothing(String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor sCursor = db.query(CLOTHING_TABLE,
+                COLUMNS,
+                COL_COLOR + " LIKE ? ",
+                new String[]{"%" + query + "%"},
+                null,
+                null,
+                null,
+                null);
+        return sCursor;
 
     }
 
