@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflating the options menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
+        //getting the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
@@ -67,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            Cursor cursor = ClothingSQLiteHelper.getInstance(MainActivity.this).getClothingItems();
+
+            TextView textView =(TextView)findViewById(R.id.title);
+            textView.setText(query + cursor.getCount());
         }
     }
 }

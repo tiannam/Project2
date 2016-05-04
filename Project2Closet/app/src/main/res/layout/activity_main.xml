@@ -9,21 +9,28 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.tiannanmcclanahan.project2closet.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:text="My Closet"
-        android:textSize="40sp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/green"
-        android:textStyle="bold"
-        />
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="4dp"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/title"-->
+        <!--android:text="My Closet"-->
+        <!--android:textSize="40sp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:textColor="@color/green"-->
+        <!--android:textStyleΩ="bold"-->
+        <!--/>-->
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/category_list"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/app_bar"
         >
     </ListView>
     <SearchView
