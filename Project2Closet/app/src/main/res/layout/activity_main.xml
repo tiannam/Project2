@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/category_list"
         android:layout_below="@+id/app_bar"
+        android:background="@color/grey_purple"
         >
     </ListView>
 

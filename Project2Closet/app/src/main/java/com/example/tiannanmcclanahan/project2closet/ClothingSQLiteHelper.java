@@ -133,19 +133,27 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         return cursor;
 
     }
+    //creating search method
     public Cursor searchClothing(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor sCursor = db.query(CLOTHING_TABLE,
-                COLUMNS,
-                COL_COLOR + " LIKE ? OR " + COL_BRAND + " LIKE ? OR " + COL_SIZE + " LIKE ? OR " + COL_NAME + " LIKE ? OR " + COL_PURCHASE_DATE + " LIKE ? OR " + COL_DESCRIPTION + " LIKE ? ",
+        Cursor sCursor = db.query(CLOTHING_TABLE, //a. table
+                COLUMNS, //b. column names
+                COL_COLOR + " LIKE ? OR " +
+                COL_BRAND + " LIKE ? OR " +
+                COL_SIZE + " LIKE ? OR " +
+                COL_NAME + " LIKE ? OR " +
+                COL_PURCHASE_DATE + " LIKE ? OR " +
+                COL_DESCRIPTION + " LIKE ? ", //c. selections
+                //d. selections args
                 new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
-                null,
-                null,
-                null,
-                null);
+                null, //e.group by
+                null, //f. having
+                null, //g. order by
+                null); //h. limit
         return sCursor;
 
     }
+    //showing details in Detail Activity
     private static final String TAG = "getItemDetailsById";
     public String getItemDetailsById(int id){
 
@@ -166,7 +174,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
                     "Purchased on: " + cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
             return string;
         }else{
-            return "No Description Found";
+            return "No Details Found";
         }
     }
 

@@ -18,6 +18,7 @@ import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends AppCompatActivity{
 
+
     CursorAdapter simpleCursorAdapter;
     private ClothingSQLiteHelper mHelper;
     private ListView listView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity{
         final Cursor cursor = mHelper.getClothingItems();
 
         simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
+
 
         listView.setAdapter(simpleCursorAdapter);
 

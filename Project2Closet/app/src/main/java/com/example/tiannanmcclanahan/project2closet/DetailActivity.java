@@ -14,6 +14,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setSupportActionBar(((Toolbar)findViewById(R.id.detail_app_bar)));
 
+        //getting instance from database
         ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(DetailActivity.this);
 
         int id = getIntent().getIntExtra("id",-1);

@@ -25,7 +25,7 @@
         android:id="@+id/detail_text"
         android:layout_below="@+id/detail_app_bar"
         android:textSize="25sp"
-        >
-
-    </TextView>
-</RelativeLayout>
+        android:background="@color/grey_purple"
+        android:textColor="@color/purple"
+        android:typeface="normal"/>
+    </RelativeLayout>
