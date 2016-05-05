@@ -30,16 +30,11 @@ public class MainActivity extends AppCompatActivity{
 
         setSupportActionBar(((Toolbar)findViewById(R.id.app_bar)));
 
-
         listView = (ListView)findViewById(R.id.category_list);
         mHelper = new ClothingSQLiteHelper(MainActivity.this);
-
          final Cursor cursor = mHelper.getClothingItems();
 
-
-
 //        ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(MainActivity.this);
-
 
         simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
@@ -73,7 +68,6 @@ public class MainActivity extends AppCompatActivity{
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
@@ -89,20 +83,8 @@ public class MainActivity extends AppCompatActivity{
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             Cursor cursor = mHelper.searchClothing(query);
-//            Cursor cursor = ClothingSQLiteHelper.getInstance(MainActivity.this).searchClothing(query);
             simpleCursorAdapter.swapCursor(cursor);
             simpleCursorAdapter.notifyDataSetChanged();
-
-
-//            ListView listView = (ListView)findViewById(R.id.category_list);
-//            if(simpleCursorAdapter == null){
-//                simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,
-//                        cursor, new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1}, 0);
-//                listView.setAdapter(simpleCursorAdapter);
-//            }else{
-//                simpleCursorAdapter.swapCursor(cursor);
-//            }
-
 
             Toast.makeText(MainActivity.this,"Searching for "+query,Toast.LENGTH_SHORT).show();
         }

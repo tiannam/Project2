@@ -136,8 +136,8 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor sCursor = db.query(CLOTHING_TABLE,
                 COLUMNS,
-                COL_COLOR + " LIKE ? ",
-                new String[]{"%" + query + "%"},
+                COL_COLOR + " LIKE ? OR " + COL_BRAND + " LIKE ? OR " + COL_SIZE + " LIKE ? OR " + COL_NAME + " LIKE ? OR " + COL_PURCHASE_DATE + " LIKE ? OR " + COL_DESCRIPTION + " LIKE ? ",
+                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null,
                 null,
                 null,
