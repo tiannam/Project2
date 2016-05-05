@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by tiannan.mcclanahan on 5/2/16.
@@ -145,7 +146,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         return sCursor;
 
     }
-
+    private static final String TAG = "getDetailsById";
     public String getDetailsById(int id){
 
         SQLiteDatabase database = this.getReadableDatabase();
@@ -157,7 +158,13 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         DatabaseUtils.dumpCursor(cursor);
 
         if (cursor.moveToFirst()){
-            return cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+            Log.i(TAG, "Hi");
+            String string = String.format("%s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndex(COL_BRAND)),
+                    cursor.getString(cursor.getColumnIndex(COL_COLOR)),
+                    cursor.getString(cursor.getColumnIndex(COL_SIZE)),
+                    cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
+            return string;
         }else {
             return "No Description Found";
         }
