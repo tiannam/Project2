@@ -11,7 +11,7 @@
         android:id="@+id/detail_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/green"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:elevation="4dp"/>
     <!--<ImageView-->
@@ -24,7 +24,8 @@
         android:layout_height="match_parent"
         android:id="@+id/detail_text"
         android:layout_below="@+id/detail_app_bar"
-        android:textSize="25sp">
+        android:textSize="25sp"
+        >
 
     </TextView>
 </RelativeLayout>

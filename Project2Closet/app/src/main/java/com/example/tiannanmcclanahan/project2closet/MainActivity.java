@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
 
         listView = (ListView)findViewById(R.id.category_list);
         mHelper = new ClothingSQLiteHelper(MainActivity.this);
-         final Cursor cursor = mHelper.getClothingItems();
+        final Cursor cursor = mHelper.getClothingItems();
 
         simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
@@ -45,8 +44,9 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent =  new Intent(MainActivity.this,DetailActivity.class);
-                cursor.moveToPosition(position);
-                intent.putExtra("id",cursor.getInt(cursor.getColumnIndex(ClothingSQLiteHelper.COL_ID)));
+                Cursor selectedCursor = (Cursor) parent.getAdapter().getItem(position);
+
+                intent.putExtra("id",selectedCursor.getInt(selectedCursor.getColumnIndex(ClothingSQLiteHelper.COL_ID)));
                 startActivity(intent);
             }
         });
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity{
             simpleCursorAdapter.swapCursor(cursor);
             simpleCursorAdapter.notifyDataSetChanged();
 
-            Toast.makeText(MainActivity.this,"Searching for "+query,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this,"Searching for "+query,Toast.LENGTH_SHORT).show();
         }
     }
 
