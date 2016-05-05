@@ -34,15 +34,13 @@ public class MainActivity extends AppCompatActivity{
         mHelper = new ClothingSQLiteHelper(MainActivity.this);
          final Cursor cursor = mHelper.getClothingItems();
 
-//        ClothingSQLiteHelper helper = ClothingSQLiteHelper.getInstance(MainActivity.this);
-
         simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
         listView.setAdapter(simpleCursorAdapter);
 
         handleIntent(getIntent());
 
-
+        //onItemClickListener for each list item
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

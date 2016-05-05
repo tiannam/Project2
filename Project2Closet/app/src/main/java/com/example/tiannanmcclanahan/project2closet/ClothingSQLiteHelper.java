@@ -146,8 +146,8 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         return sCursor;
 
     }
-    private static final String TAG = "getDetailsById";
-    public String getDetailsById(int id){
+    private static final String TAG = "getItemDetailsById";
+    public String getItemDetailsById(int id){
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -159,13 +159,13 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()){
             Log.i(TAG, "Hi");
-            String string = String.format("%s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
-                    cursor.getString(cursor.getColumnIndex(COL_BRAND)),
-                    cursor.getString(cursor.getColumnIndex(COL_COLOR)),
-                    cursor.getString(cursor.getColumnIndex(COL_SIZE)),
-                    cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
+            String string = String.format(" %s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
+                    "Brand: " + cursor.getString(cursor.getColumnIndex(COL_BRAND)),
+                    "Color: " + cursor.getString(cursor.getColumnIndex(COL_COLOR)),
+                    "Size: " + cursor.getString(cursor.getColumnIndex(COL_SIZE)),
+                    "Purchased on: " + cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
             return string;
-        }else {
+        }else{
             return "No Description Found";
         }
     }
