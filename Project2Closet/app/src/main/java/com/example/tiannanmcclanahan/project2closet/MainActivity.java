@@ -19,7 +19,7 @@ import android.widget.SimpleCursorAdapter;
 public class MainActivity extends AppCompatActivity{
 
 
-    CursorAdapter simpleCursorAdapter;
+    CursorAdapter cursorAdapter;
     private ClothingSQLiteHelper mHelper;
     private ListView listView;
 
@@ -28,16 +28,53 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar(((Toolbar)findViewById(R.id.app_bar)));
+        setSupportActionBar(((Toolbar) findViewById(R.id.app_bar)));
 
-        listView = (ListView)findViewById(R.id.category_list);
+        listView = (ListView) findViewById(R.id.category_list);
         mHelper = new ClothingSQLiteHelper(MainActivity.this);
         final Cursor cursor = mHelper.getClothingItems();
 
-        simpleCursorAdapter = new SimpleCursorAdapter(MainActivity.this,android.R.layout.simple_list_item_1,cursor,new String[]{ClothingSQLiteHelper.COL_NAME}, new int[]{android.R.id.text1},0);
 
 
-        listView.setAdapter(simpleCursorAdapter);
+        if (cursorAdapter == null) {
+
+            cursorAdapter = new SimpleCursorAdapter(
+                    MainActivity.this,
+                    R.layout.list_item_layout,
+                    cursor,
+                    new String[]{ClothingSQLiteHelper.COL_NAME, ClothingSQLiteHelper.COL_DESCRIPTION},
+                    new int[]{R.id.clothing_item, R.id.item_description},
+                    0
+            );
+
+//            CursorAdapter cursorAdapter = new CursorAdapter(MainActivity.this, cursor, 0) {
+//                @Override
+//                public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
+//                    LayoutInflater inflater = LayoutInflater.from(context);
+//                    View view = inflater.inflate(R.layout.list_item_layout,viewGroup,false);
+//                    return view;
+//                }
+//
+//                @Override
+//                public void bindView(View view, Context context, Cursor cursor) {
+////                TextView textView = (TextView)view.findViewById(android.R.id.text1);
+////
+////                textView.setText(cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_NAME)));
+//
+//                    TextView nameTextView = (TextView) view.findViewById(R.id.clothing_item);
+//                    TextView descriptionTextView = (TextView) view.findViewById(R.id.item_description);
+//
+//                    nameTextView.setText(cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_NAME)));
+//                    descriptionTextView.setText(cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_DESCRIPTION)));
+//                }
+//            };
+            listView.setAdapter(cursorAdapter);
+        }else {
+            cursorAdapter.swapCursor(cursor);
+        }
+        listView.setAdapter(cursorAdapter);
+
+
 
         handleIntent(getIntent());
 
@@ -83,8 +120,8 @@ public class MainActivity extends AppCompatActivity{
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             Cursor cursor = mHelper.searchClothing(query);
-            simpleCursorAdapter.swapCursor(cursor);
-            simpleCursorAdapter.notifyDataSetChanged();
+            cursorAdapter.swapCursor(cursor);
+            cursorAdapter.notifyDataSetChanged();
 
 //            Toast.makeText(MainActivity.this,"Searching for "+query,Toast.LENGTH_SHORT).show();
         }

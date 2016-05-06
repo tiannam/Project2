@@ -6,14 +6,13 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by tiannan.mcclanahan on 5/2/16.
  */
 public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "ClothingItems.db";
     public static final String CLOTHING_TABLE = "Clothing_Items";
 
@@ -25,9 +24,10 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
     public static final String COL_BRAND = "Brand";
     public static final String COL_DESCRIPTION = "Description";
     public static final String COL_PURCHASE_DATE = "Purchase_Date";
+    public static final String COL_PICTURE = "Picture";
 
     public static final String[] COLUMNS = {
-            COL_ID, COL_NAME, COL_TYPE, COL_COLOR, COL_SIZE, COL_BRAND, COL_DESCRIPTION, COL_PURCHASE_DATE };
+            COL_ID, COL_NAME, COL_TYPE, COL_COLOR, COL_SIZE, COL_BRAND, COL_DESCRIPTION, COL_PURCHASE_DATE, COL_PICTURE };
 
     private static final String CREATE_CLOTHING_TABLE = "CREATE TABLE " + CLOTHING_TABLE + "(" +
         COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -37,7 +37,8 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         COL_SIZE + " TEXT, " +
         COL_BRAND + " TEXT, " +
         COL_DESCRIPTION + " TEXT, " +
-        COL_PURCHASE_DATE + " TEXT)";
+        COL_PURCHASE_DATE + " TEXT, " +
+        COL_PICTURE + " TEXT)";
 
     //Singleton class
     private static ClothingSQLiteHelper instance;
@@ -77,6 +78,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_BRAND, "GAP");
         values.put(COL_DESCRIPTION, "Dark blue denim jacket");
         values.put(COL_PURCHASE_DATE, "3/1/2016");
+        values.put(COL_PICTURE, R.drawable.denimjacket);
         db.insert(CLOTHING_TABLE, null ,values);
 
         values = new ContentValues();
@@ -87,6 +89,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_BRAND, "Marc Jacobs");
         values.put(COL_DESCRIPTION, "Leather jacket");
         values.put(COL_PURCHASE_DATE, "12/15/2012");
+        values.put(COL_PICTURE, R.drawable.leatherjacket);
         db.insert(CLOTHING_TABLE, null ,values);
 
         values = new ContentValues();
@@ -97,6 +100,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_BRAND, "Banana Republic");
         values.put(COL_DESCRIPTION, "Tweed jacket");
         values.put(COL_PURCHASE_DATE, "1/2/2013");
+        values.put(COL_PICTURE,R.drawable.brownjacket);
         db.insert(CLOTHING_TABLE, null ,values);
 
         values = new ContentValues();
@@ -107,6 +111,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_BRAND, "Banana Republic");
         values.put(COL_DESCRIPTION, "Khaki blazer");
         values.put(COL_PURCHASE_DATE, "5/6/2014");
+        values.put(COL_PICTURE, R.drawable.khakiblazer);
         db.insert(CLOTHING_TABLE, null ,values);
 
         values = new ContentValues();
@@ -117,6 +122,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_BRAND, "Express");
         values.put(COL_DESCRIPTION, "Olive green jacket with hood");
         values.put(COL_PURCHASE_DATE, "10/25/2015");
+        values.put(COL_PICTURE, R.drawable.greenjacket);
         db.insert(CLOTHING_TABLE, null ,values);
     }
 
@@ -124,7 +130,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String [] projection = new String[]{COL_ID, COL_NAME, COL_TYPE};
+        String [] projection = new String[]{COL_ID, COL_NAME, COL_DESCRIPTION};
 
         Cursor cursor = database.query(CLOTHING_TABLE, projection, null, null, null, null, null, null);
 
@@ -143,9 +149,10 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
                 COL_SIZE + " LIKE ? OR " +
                 COL_NAME + " LIKE ? OR " +
                 COL_PURCHASE_DATE + " LIKE ? OR " +
-                COL_DESCRIPTION + " LIKE ? ", //c. selections
+                COL_DESCRIPTION + " LIKE ? OR" +
+                COL_PICTURE + " LIKE ? OR ", //c. selections
                 //d. selections args
-                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
+                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, //e.group by
                 null, //f. having
                 null, //g. order by
@@ -154,28 +161,28 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
     }
     //showing details in Detail Activity
-    private static final String TAG = "getItemDetailsById";
-    public String getItemDetailsById(int id){
+
+    public Cursor getItemDetailsById(int id){
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String [] projection = new String[]{COL_NAME, COL_COLOR, COL_BRAND, COL_DESCRIPTION, COL_SIZE, COL_PURCHASE_DATE};
+        String [] projection = new String[]{COL_NAME, COL_COLOR, COL_BRAND, COL_DESCRIPTION, COL_SIZE, COL_PURCHASE_DATE, COL_PICTURE};
 
         Cursor cursor = database.query(CLOTHING_TABLE,projection, COL_ID + "= ?", new String []{String.valueOf(id)}, null, null, null, null);
 
         DatabaseUtils.dumpCursor(cursor);
 
-        if (cursor.moveToFirst()){
-            Log.i(TAG, "Hi");
-            String string = String.format(" %s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
-                    "Brand: " + cursor.getString(cursor.getColumnIndex(COL_BRAND)),
-                    "Color: " + cursor.getString(cursor.getColumnIndex(COL_COLOR)),
-                    "Size: " + cursor.getString(cursor.getColumnIndex(COL_SIZE)),
-                    "Purchased on: " + cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
-            return string;
-        }else{
-            return "No Details Found";
-        }
+//        if (cursor.moveToFirst()){
+
+//           String string = String.format(" %s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
+//                    "Brand: " + cursor.getString(cursor.getColumnIndex(COL_BRAND)),
+//                    "Color: " + cursor.getString(cursor.getColumnIndex(COL_COLOR)),
+//                    "Size: " + cursor.getString(cursor.getColumnIndex(COL_SIZE)),
+//                    "Purchased on: " + cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
+//            return cursor;
+//        }else{
+            return cursor;
+//        }
     }
 
 }
