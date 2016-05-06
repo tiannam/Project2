@@ -12,10 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
+    //instantiating database
     public static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "ClothingItems.db";
     public static final String CLOTHING_TABLE = "Clothing_Items";
 
+    //instantiating columns in database
     public static final String COL_ID = "_id";
     public static final String COL_NAME = "Name";
     public static final String COL_TYPE = "Type";
@@ -125,7 +127,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
         values.put(COL_PICTURE, R.drawable.greenjacket);
         db.insert(CLOTHING_TABLE, null ,values);
     }
-
+    //method to display list
     public Cursor getClothingItems (){
 
         SQLiteDatabase database = this.getReadableDatabase();
@@ -149,8 +151,8 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
                 COL_SIZE + " LIKE ? OR " +
                 COL_NAME + " LIKE ? OR " +
                 COL_PURCHASE_DATE + " LIKE ? OR " +
-                COL_DESCRIPTION + " LIKE ? OR" +
-                COL_PICTURE + " LIKE ? OR ", //c. selections
+                COL_DESCRIPTION + " LIKE ? OR " +
+                COL_PICTURE + " LIKE ? OR", //c. selections
                 //d. selections args
                 new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, //e.group by
@@ -161,7 +163,6 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
     }
     //showing details in Detail Activity
-
     public Cursor getItemDetailsById(int id){
 
         SQLiteDatabase database = this.getReadableDatabase();
@@ -172,17 +173,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
         DatabaseUtils.dumpCursor(cursor);
 
-//        if (cursor.moveToFirst()){
-
-//           String string = String.format(" %s \n %s \n %s \n %s \n %s",cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
-//                    "Brand: " + cursor.getString(cursor.getColumnIndex(COL_BRAND)),
-//                    "Color: " + cursor.getString(cursor.getColumnIndex(COL_COLOR)),
-//                    "Size: " + cursor.getString(cursor.getColumnIndex(COL_SIZE)),
-//                    "Purchased on: " + cursor.getString(cursor.getColumnIndex(COL_PURCHASE_DATE)));
-//            return cursor;
-//        }else{
             return cursor;
-//        }
     }
 
 }

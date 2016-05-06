@@ -5,4 +5,10 @@ package com.example.tiannanmcclanahan.project2closet;
  */
 public class ClothingTest {
 
+//    Brand brand = new Brand(true);
+//    @Test
+//    public void whatBrand (){
+//        assertTrue("GAP",true);
+//    }
+
 }

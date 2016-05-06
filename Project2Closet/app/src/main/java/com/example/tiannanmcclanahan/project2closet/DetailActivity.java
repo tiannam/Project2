@@ -23,23 +23,24 @@ public class DetailActivity extends AppCompatActivity {
 
         if(id >= 0) {
 
-
             Cursor cursor = helper.getItemDetailsById(id);
 
             if (cursor.moveToFirst()) {
 
+                //using cursor to display each item's attributes
                 String description = String.format(" %s \n %s \n %s \n %s \n %s", cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_DESCRIPTION)),
                         "Brand: " + cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_BRAND)),
                         "Color: " + cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_COLOR)),
                         "Size: " + cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_SIZE)),
                         "Purchased on: " + cursor.getString(cursor.getColumnIndex(ClothingSQLiteHelper.COL_PURCHASE_DATE)));
 
-
                 int imageID = cursor.getInt(cursor.getColumnIndex(ClothingSQLiteHelper.COL_PICTURE));
 
+                //setting text to detail activity
                 TextView textView = (TextView) findViewById(R.id.detail_text);
                 textView.setText(description);
 
+                //setting image to detail activity
                 ImageView imageView = (ImageView) findViewById(R.id.image);
                 imageView.setImageResource(imageID);
             }

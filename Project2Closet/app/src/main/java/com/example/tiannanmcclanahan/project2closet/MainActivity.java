@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity{
         final Cursor cursor = mHelper.getClothingItems();
 
 
-
         if (cursorAdapter == null) {
 
             cursorAdapter = new SimpleCursorAdapter(
