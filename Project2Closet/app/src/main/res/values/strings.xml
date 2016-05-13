@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">My Closet</string>
     <string name="search_hint">Search for something</string>
+    <string name="list_view">list of clothing items</string>
+    <string name="clothing_item">clothing item</string>
+    <string name="description">clothing item description</string>
+    <string name="image">picture of clothing item</string>
 </resources>

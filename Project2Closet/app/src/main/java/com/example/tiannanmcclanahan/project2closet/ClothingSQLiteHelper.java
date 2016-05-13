@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ClothingSQLiteHelper extends SQLiteOpenHelper{
 
     //instantiating database
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 15;
     public static final String DATABASE_NAME = "ClothingItems.db";
     public static final String CLOTHING_TABLE = "Clothing_Items";
 
@@ -152,7 +152,7 @@ public class ClothingSQLiteHelper extends SQLiteOpenHelper{
                 COL_NAME + " LIKE ? OR " +
                 COL_PURCHASE_DATE + " LIKE ? OR " +
                 COL_DESCRIPTION + " LIKE ? OR " +
-                COL_PICTURE + " LIKE ? OR", //c. selections
+                COL_PICTURE + " LIKE ? ", //c. selections
                 //d. selections args
                 new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, //e.group by

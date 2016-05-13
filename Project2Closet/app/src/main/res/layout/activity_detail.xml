@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/image"
-        android:layout_below="@+id/detail_app_bar"/>
+        android:layout_below="@+id/detail_app_bar"
+        android:contentDescription="@string/clothing_item"
+        android:nextFocusDown="@string/image"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,5 +29,7 @@
         android:textSize="25sp"
         android:background="@color/grey_purple"
         android:textColor="@color/purple"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:contentDescription="@string/description"
+        />
     </RelativeLayout>

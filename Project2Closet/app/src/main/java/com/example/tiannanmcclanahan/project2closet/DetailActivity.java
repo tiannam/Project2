@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,10 +41,15 @@ public class DetailActivity extends AppCompatActivity {
                 //setting text to detail activity
                 TextView textView = (TextView) findViewById(R.id.detail_text);
                 textView.setText(description);
+                Animation pull_left = AnimationUtils.loadAnimation(this, R.anim.pull_left);
+                textView.startAnimation(pull_left);
+
 
                 //setting image to detail activity
                 ImageView imageView = (ImageView) findViewById(R.id.image);
                 imageView.setImageResource(imageID);
+                Animation scale = AnimationUtils.loadAnimation(this, R.anim.scale);
+                imageView.startAnimation(scale);
             }
         }
     }

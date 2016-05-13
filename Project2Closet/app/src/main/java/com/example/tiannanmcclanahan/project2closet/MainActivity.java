@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity{
 
                 intent.putExtra("id",selectedCursor.getInt(selectedCursor.getColumnIndex(ClothingSQLiteHelper.COL_ID)));
                 startActivity(intent);
+                //MainActivity.this.overridePendingTransition(R.anim.pull_left, R.anim.push_out_right);
+
+//
             }
         });
 
